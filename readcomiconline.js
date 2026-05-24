@@ -10,7 +10,7 @@
 __cinderExport = {
 	id: "readcomiconline",
 	name: "ReadComicOnline",
-	version: "1.0.7",
+	version: "1.0.8",
 	icon: "📚",
 	description: "Read Marvel, DC, Image and more comics from ReadComicOnline",
 	contentType: "manga",
@@ -141,46 +141,88 @@ __cinderExport = {
 	async getPages(chapterId) {
 		// readType=1 = all pages on one page
 		const url = `${this._baseUrl}${chapterId}${chapterId.includes("?") ? "&" : "?"}readType=1`;
+		const headers = {
+			"User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1",
+			"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+			"Accept-Language": "en-US,en;q=0.9",
+			"Referer": this._baseUrl + "/",
+		};
 
-		// Page images start with empty src="" and are populated by obfuscated JS.
-		// We use fetchBrowser (WebView) which runs the JS, then extract once images load.
-		const res = await cinder.fetchBrowser(url, {
-			headers: {
-				"User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1",
-				"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-				"Accept-Language": "en-US,en;q=0.9",
-				"Referer": this._baseUrl + "/",
-				"X-Cinder-Suppress-Interactive": "1",
-			},
-		});
-
-		if (!res.data) return [];
+		const res = await cinder.fetch(url, { headers });
+		if (res.status !== 200 || !res.data) return [];
 
 		const pages = [];
-
-		// After WebView JS runs, images should have their src populated.
-		// Find all <img> tags with non-empty src that look like comic page images.
-		const imgRegex = /<img[^>]*src="(https?:\/\/[^"]+)"[^>]*>/gi;
-		let match;
 		const seen = {};
 
-		while ((match = imgRegex.exec(res.data)) !== null) {
-			const src = match[1];
-			if (seen[src]) continue;
-			// Skip site chrome images (ads, icons, avatars, loading gif)
+		function addPage(src) {
+			if (!src || seen[src]) return;
 			if (src.includes("/Content/") || src.includes("/Uploads/") ||
 				src.includes("icon") || src.includes("logo") ||
 				src.includes("avatar") || src.includes("loading") ||
 				src.includes("google") || src.includes("analytics") ||
 				src.includes(".gif") || src.includes("dreemy") ||
-				src.includes("ads") || src.includes("banner")) continue;
+				src.includes("ads") || src.includes("banner")) return;
 			seen[src] = true;
 			pages.push({ url: src });
 		}
 
+		function step1(value) {
+			return value.substring(15, 33) + value.substring(50);
+		}
+
+		function step2(value) {
+			return value.substring(0, value.length - 11) + value[value.length - 2] + value[value.length - 1];
+		}
+
+		function decodeBase64(value) {
+			try {
+				return decodeURIComponent(escape(atob(value)));
+			} catch (err) {
+				try { return atob(value); } catch (err2) { return ""; }
+			}
+		}
+
+		function decodeRcoPath(value) {
+			let current = value
+				.replace(/kQ__Wgp3Ez_/g, "e")
+				.replace(/b/g, "pw_.g28x")
+				.replace(/h/g, "d2pr.x_27")
+				.replace(/pw_.g28x/g, "b")
+				.replace(/d2pr.x_27/g, "h");
+
+			if (current.indexOf("https") === 0) return current;
+
+			const queryIndex = current.indexOf("?");
+			const s0Index = current.indexOf("=s0?");
+			const s1600Index = current.indexOf("=s1600?");
+			const suffixIndex = s0Index > 0 ? s0Index : s1600Index;
+			if (queryIndex < 0 || suffixIndex < 0) return "";
+
+			const query = current.substring(queryIndex);
+			const encoded = current.substring(0, suffixIndex);
+			let decoded = decodeBase64(step2(step1(encoded)));
+			if (!decoded) return "";
+
+			decoded = decoded.substring(0, 13) + decoded.substring(17);
+			decoded = decoded.substring(0, decoded.length - 2) + (s0Index > 0 ? "=s0" : "=s1600");
+			return "https://2.bp.blogspot.com/" + decoded + query;
+		}
+
+		// Current RCO pages embed obfuscated image paths in pth assignments.
+		const pthRegex = /pth\s*=\s*'([^']+)'[\s\S]*?\.push\(pth\);/g;
+		let match;
+		while ((match = pthRegex.exec(res.data)) !== null) {
+			addPage(decodeRcoPath(match[1]));
+		}
+
+		// Fallback for older pages or if the host switches back to populated img src values.
+		const imgRegex = /<img[^>]*src="(https?:\/\/[^\"]+)"[^>]*>/gi;
+		while ((match = imgRegex.exec(res.data)) !== null) {
+			addPage(match[1]);
+		}
+
 		return pages;
 	},
-
 	// ── Manga Details ────────────────────────────────
 
 	async getMangaDetails(id) {
