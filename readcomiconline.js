@@ -10,7 +10,7 @@
 __cinderExport = {
 	id: "readcomiconline",
 	name: "ReadComicOnline",
-	version: "1.0.6",
+	version: "1.0.7",
 	icon: "📚",
 	description: "Read Marvel, DC, Image and more comics from ReadComicOnline",
 	contentType: "manga",
@@ -144,7 +144,15 @@ __cinderExport = {
 
 		// Page images start with empty src="" and are populated by obfuscated JS.
 		// We use fetchBrowser (WebView) which runs the JS, then extract once images load.
-		const res = await cinder.fetchBrowser(url);
+		const res = await cinder.fetchBrowser(url, {
+			headers: {
+				"User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1",
+				"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+				"Accept-Language": "en-US,en;q=0.9",
+				"Referer": this._baseUrl + "/",
+				"X-Cinder-Suppress-Interactive": "1",
+			},
+		});
 
 		if (!res.data) return [];
 
