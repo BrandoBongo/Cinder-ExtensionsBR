@@ -55,7 +55,15 @@
                            "contentType":  "manga",
                            "scriptUrl":  "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/gocomics.js",
                            "minCinderVersion":  "2.0.0"
+                       },
+                       {
+                           "id":  "bbato",
+                           "name":  "BBato",
+                           "version":  "1.0.3-cinder",
+                           "description":  "Read manga, manhwa, and manhua from BBato.",
+                           "contentType":  "manga",
+                           "scriptUrl":  "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/bbato.js",
+                           "minCinderVersion":  "2.0.0"
                        }
                    ]
 }
-
