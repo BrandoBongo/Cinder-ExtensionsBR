@@ -20,7 +20,7 @@
     {
       "id": "readcomiconline",
       "name": "ReadComicOnline",
-      "version": "1.0.8",
+      "version": "1.0.9",
       "description": "Read Marvel, DC, Image and more comics — the largest western comics library",
       "contentType": "comics",
       "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/readcomiconline.js",
@@ -52,7 +52,7 @@
     {
       "id": "downmagaz",
       "name": "DownMagaz",
-      "version": "4.0.10",
+      "version": "4.0.11",
       "description": "Search and browse DownMagaz on device, then resolve issue links for PDF download.",
       "contentType": "magazine",
       "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/downmagaz_device.js",
@@ -80,7 +80,7 @@
     {
       "id": "gocomics",
       "name": "GoComics",
-      "version": "3.3.0",
+      "version": "3.3.1",
       "description": "Read 600+ daily comic strips via ComicsRSS - GoComics, Comics Kingdom, Wumo, Life on Earth, and more.",
       "contentType": "comics",
       "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/gocomics.js",
