@@ -1,19 +1,21 @@
-// ─── ReadComicOnline Extension for Cinder ─────────────────────
+﻿// â”€â”€â”€ ReadComicOnline Extension for Cinder â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 //
 // Connects to rcostation.xyz for western comic reading.
 // Search and chapter listing use regular fetch.
 // Page images require fetchBrowser (WebView) since they're JS-loaded.
 //
-// This is a COMMUNITY EXTENSION — all site-specific logic is here,
+// This is a COMMUNITY EXTENSION â€” all site-specific logic is here,
 // not in the Cinder app itself.
 
 __cinderExport = {
 	id: "readcomiconline",
 	name: "ReadComicOnline",
 	version: "1.0.8",
-	icon: "📚",
+	icon: "ðŸ“š",
 	description: "Read Marvel, DC, Image and more comics from ReadComicOnline",
-	contentType: "manga",
+	contentType: "comics",
+	contentTypes: ["comic"],
+	contentSubtypes: ["westernComic"],
 
 	capabilities: {
 		search: true,
@@ -25,7 +27,7 @@ __cinderExport = {
 
 	_baseUrl: "https://rcostation.xyz",
 
-	// ── Search ───────────────────────────────────────
+	// â”€â”€ Search â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 	async search(query, page = 0) {
 		const url = `${this._baseUrl}/Search/Comic?keyword=${encodeURIComponent(query)}`;
@@ -81,7 +83,7 @@ __cinderExport = {
 		return items;
 	},
 
-	// ── Chapters (Issues) ────────────────────────────
+	// â”€â”€ Chapters (Issues) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 	async getChapters(mangaId) {
 		const url = `${this._baseUrl}/Comic/${mangaId}`;
@@ -136,7 +138,7 @@ __cinderExport = {
 		return chapters.reverse();
 	},
 
-	// ── Pages (Images) ───────────────────────────────
+	// â”€â”€ Pages (Images) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 	async getPages(chapterId) {
 		// readType=1 = all pages on one page
@@ -223,7 +225,7 @@ __cinderExport = {
 
 		return pages;
 	},
-	// ── Manga Details ────────────────────────────────
+	// â”€â”€ Manga Details â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 	async getMangaDetails(id) {
 		const url = `${this._baseUrl}/Comic/${id}`;
@@ -268,12 +270,12 @@ __cinderExport = {
 		};
 	},
 
-	// ── Discover ─────────────────────────────────────
+	// â”€â”€ Discover â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 	async getDiscoverSections() {
 		return [
-			{ id: "popular", title: "🔥 Popular Comics", icon: "flame" },
-			{ id: "latest", title: "📚 Latest Updates", icon: "time" },
+			{ id: "popular", title: "ðŸ”¥ Popular Comics", icon: "flame" },
+			{ id: "latest", title: "ðŸ“š Latest Updates", icon: "time" },
 		];
 	},
 
@@ -335,9 +337,10 @@ __cinderExport = {
 		return items;
 	},
 
-	// ── Settings ──────────────────────────────────────
+	// â”€â”€ Settings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 	getSettings() {
 		return [];
 	},
 };
+

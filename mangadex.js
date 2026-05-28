@@ -1,10 +1,10 @@
-// ─── MangaDex Extension for Cinder ──────────────────────────
+﻿// â”€â”€â”€ MangaDex Extension for Cinder â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 //
 // Searches and browses manga from MangaDex.org using their
 // public API v5. MangaDex is a free, open, community-run
 // manga platform.
 //
-// This file is a SAMPLE EXTENSION — it would normally be
+// This file is a SAMPLE EXTENSION â€” it would normally be
 // distributed via a repository URL, NOT bundled with the app.
 // It's included here for testing/development purposes only.
 //
@@ -14,9 +14,11 @@ __cinderExport = {
 	id: "mangadex",
 	name: "MangaDex",
 	version: "1.0.7",
-	icon: "📖",
-	description: "Search manga from MangaDex.org — free, community-run manga platform",
+	icon: "ðŸ“–",
+	description: "Search manga from MangaDex.org â€” free, community-run manga platform",
 	contentType: "manga",
+	contentTypes: ["manga"],
+	contentSubtypes: ["manga"],
 
 	capabilities: {
 		search: true,
@@ -26,7 +28,7 @@ __cinderExport = {
 		manga: true,
 	},
 
-	// ── Helpers ──────────────────────────────────────
+	// â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 	_getCoverUrl(mangaId, coverId, fileName) {
 		if (!fileName) return undefined;
@@ -47,7 +49,7 @@ __cinderExport = {
 		return cover?.attributes?.fileName || null;
 	},
 
-	// ── Search ───────────────────────────────────────
+	// â”€â”€ Search â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 	async search(query, page = 0) {
 		const limit = 20;
@@ -113,13 +115,13 @@ __cinderExport = {
 		return results;
 	},
 
-	// ── Discover ─────────────────────────────────────
+	// â”€â”€ Discover â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 	async getDiscoverSections() {
 		return [
-			{ id: "popular", title: "Popular", icon: "🔥" },
-			{ id: "latest", title: "Latest Updates", icon: "🆕" },
-			{ id: "top-rated", title: "Top Rated", icon: "⭐" },
+			{ id: "popular", title: "Popular", icon: "ðŸ”¥" },
+			{ id: "latest", title: "Latest Updates", icon: "ðŸ†•" },
+			{ id: "top-rated", title: "Top Rated", icon: "â­" },
 		];
 	},
 
@@ -172,7 +174,7 @@ __cinderExport = {
 		return results;
 	},
 
-	// ── Manga Details ────────────────────────────────
+	// â”€â”€ Manga Details â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 	async getMangaDetails(id) {
 		const url = `https://api.mangadex.org/manga/${id}?includes[]=cover_art&includes[]=author&includes[]=artist`;
@@ -215,7 +217,7 @@ __cinderExport = {
 		};
 	},
 
-	// ── Chapters ──────────────────────────────────────
+	// â”€â”€ Chapters â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 	async getChapters(mangaId) {
 		const chapters = [];
@@ -257,7 +259,7 @@ __cinderExport = {
 		return chapters;
 	},
 
-	// ── Pages ─────────────────────────────────────────
+	// â”€â”€ Pages â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 	async getPages(chapterId) {
 		const url = `https://api.mangadex.org/at-home/server/${chapterId}`;
@@ -281,7 +283,7 @@ __cinderExport = {
 		}));
 	},
 
-	// ── Settings ──────────────────────────────────────
+	// â”€â”€ Settings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 	getSettings() {
 		return [
@@ -298,3 +300,4 @@ __cinderExport = {
 		];
 	}
 };
+

@@ -1,4 +1,4 @@
-// ─── OPDS Catalog Extension for Cinder ──────────────────────
+﻿// â”€â”€â”€ OPDS Catalog Extension for Cinder â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 //
 // Connects to any OPDS-compatible book/comic server, such as:
 // Komga, Kavita, Calibre-web, COPS, Ubooquity, etc.
@@ -10,9 +10,10 @@ __cinderExport = {
 	id: "opds-catalog",
 	name: "OPDS Catalog",
 	version: "1.0.3",
-	icon: "🌐",
+	icon: "ðŸŒ",
 	description: "Connect to your OPDS-compatible server (Komga, Kavita, Calibre-web, COPS)",
 	contentType: "books",
+	contentTypes: ["ebook"],
 
 	capabilities: {
 		search: true,
@@ -22,7 +23,7 @@ __cinderExport = {
 		manga: false,
 	},
 
-	// ── Helpers ──────────────────────────────────────
+	// â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 	async _fetchOPDS(url) {
 		const defs = this.getSettings();
@@ -106,11 +107,11 @@ __cinderExport = {
 		};
 	},
 
-	// ── Discover ─────────────────────────────────────
+	// â”€â”€ Discover â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 	async getDiscoverSections() {
 		return [
-			{ id: "root", title: "Catalog Root", icon: "📁" }
+			{ id: "root", title: "Catalog Root", icon: "ðŸ“" }
 		];
 	},
 
@@ -145,11 +146,11 @@ __cinderExport = {
 		return items;
 	},
 
-	// ── Search ───────────────────────────────────────
+	// â”€â”€ Search â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 	async search(query, page = 0) {
 		const rootXml = await this._fetchOPDS(null);
-		if (!rootXml) return []; // Server URL not configured — skip silently
+		if (!rootXml) return []; // Server URL not configured â€” skip silently
 		const searchLink = rootXml.querySelector("link[rel='search'][type='application/atom+xml']");
 
 		let searchUrl;
@@ -176,7 +177,7 @@ __cinderExport = {
 		return items;
 	},
 
-	// ── Download ─────────────────────────────────────
+	// â”€â”€ Download â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 	async resolve(item) {
 		const defs = this.getSettings();
@@ -199,7 +200,7 @@ __cinderExport = {
 		};
 	},
 
-	// ── Settings ──────────────────────────────────────
+	// â”€â”€ Settings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 	getSettings() {
 		return [
@@ -221,9 +222,10 @@ __cinderExport = {
 				id: "password",
 				label: "Password",
 				type: "password",
-				placeholder: "••••••••",
+				placeholder: "â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢",
 				defaultValue: "",
 			},
 		];
 	}
 };
+

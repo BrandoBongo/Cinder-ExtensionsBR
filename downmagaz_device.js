@@ -1,4 +1,4 @@
-// DownMagaz device-side extension for Cinder
+﻿// DownMagaz device-side extension for Cinder
 // Rewritten to avoid the proxy-backed manga/PDF-page flow.
 // This version searches and resolves issue links on device and lets Cinder
 // download/open the resulting PDF or file-host URL with the normal reader path.
@@ -11,8 +11,9 @@ DownMagazSource.version = "4.0.10";
 DownMagazSource.icon = "\uD83D\uDCF0";
 DownMagazSource.description =
   "Search and browse DownMagaz on device, then resolve issue links for PDF download.";
-DownMagazSource.contentType = "books";
-
+DownMagazSource.contentType = "magazine";
+
+DownMagazSource.contentTypes = ["magazine"];
 DownMagazSource.capabilities = {
   search: true,
   discover: true,
@@ -103,8 +104,8 @@ DownMagazSource._decode = function(text) {
       .replace(/&#039;/g, "'")
       .replace(/&amp;/g, "&")
       .replace(/&quot;/g, '"')
-      .replace(/&#8211;/g, "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ")
-      .replace(/&#8212;/g, "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â")
+      .replace(/&#8211;/g, "ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“")
+      .replace(/&#8212;/g, "ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â")
   );
 };
 
@@ -325,7 +326,7 @@ DownMagazSource.search = async function(query, page) {
 
 DownMagazSource.getDiscoverSections = async function() {
   return this.CATEGORIES.map(function(c) {
-    return { id: c.id, title: c.title, icon: "ÃƒÆ’Ã‚Â°Ãƒâ€¦Ã‚Â¸ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œÃƒâ€šÃ‚Â°" };
+    return { id: c.id, title: c.title, icon: "ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â°ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¸ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â°" };
   });
 };
 
@@ -384,3 +385,4 @@ DownMagazSource.resolve = async function(item) {
 };
 
 __cinderExport = DownMagazSource;
+

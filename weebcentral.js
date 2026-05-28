@@ -1,13 +1,15 @@
-// WeebCentral Extension for Cinder
+﻿// WeebCentral Extension for Cinder
 // Manga, manhwa, and manhua from WeebCentral.com
 
 __cinderExport = {
 	id: "weebcentral",
 	name: "WeebCentral",
 	version: "1.0.6",
-	icon: "📚",
+	icon: "ðŸ“š",
 	description: "Read manga, manhwa, and manhua from WeebCentral.com",
 	contentType: "manga",
+	contentTypes: ["manga"],
+	contentSubtypes: ["manga", "manhwa", "manhua"],
 
 	capabilities: {
 		search: true,
@@ -149,10 +151,10 @@ __cinderExport = {
 
 	async getDiscoverSections() {
 		return [
-			{ id: "latest",      title: "Latest Updates",   icon: "🆕" },
-			{ id: "hot-weekly",  title: "Hot This Week",    icon: "🔥" },
-			{ id: "hot-monthly", title: "Hot This Month",   icon: "📈" },
-			{ id: "hot-alltime", title: "All-Time Popular", icon: "⭐" },
+			{ id: "latest",      title: "Latest Updates",   icon: "ðŸ†•" },
+			{ id: "hot-weekly",  title: "Hot This Week",    icon: "ðŸ”¥" },
+			{ id: "hot-monthly", title: "Hot This Month",   icon: "ðŸ“ˆ" },
+			{ id: "hot-alltime", title: "All-Time Popular", icon: "â­" },
 		];
 	},
 

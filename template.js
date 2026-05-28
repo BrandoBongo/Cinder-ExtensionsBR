@@ -1,4 +1,4 @@
-// ─── Cinder Extension Template ────────────────────────────────
+﻿// â”€â”€â”€ Cinder Extension Template â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 //
 // This is a minimal template for creating a Cinder extension.
 // It is fully documented with all available capabilities and APIs.
@@ -8,15 +8,16 @@
 // use the `cinder` object for all operations.
 
 __cinderExport = {
-	// ── Required Properties ─────────────────────────
+	// â”€â”€ Required Properties â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 	id: "my-source-id",           // Unique identifier (lowercase, dashes ok)
 	name: "My Source",            // Display name
 	version: "1.0.0",            // Semver version
-	icon: "📚",                   // Emoji or icon URL
+	icon: "ðŸ“š",                   // Emoji or icon URL
 	description: "A short description of what this extension does",
 
 	// Content type: "books" | "comics" | "manga" | "audiobooks"
 	contentType: "books",
+	contentTypes: ["ebook"],
 
 	// Declare what this extension can do
 	capabilities: {
@@ -28,7 +29,7 @@ __cinderExport = {
 		manga: false,              // Has getChapters() and getPages() for manga reading
 	},
 
-	// ── Search ──────────────────────────────────────
+	// â”€â”€ Search â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 	// Required if capabilities.search = true
 
 	async search(query, page = 0) {
@@ -75,13 +76,13 @@ __cinderExport = {
 		return results;
 	},
 
-	// ── Discover (Home Page) ─────────────────────────
+	// â”€â”€ Discover (Home Page) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 	// Required if capabilities.discover = true
 
 	async getDiscoverSections() {
 		return [
-			{ id: "popular", title: "Popular Books", icon: "🔥" },
-			{ id: "new", title: "New Releases", icon: "✨" },
+			{ id: "popular", title: "Popular Books", icon: "ðŸ”¥" },
+			{ id: "new", title: "New Releases", icon: "âœ¨" },
 		];
 	},
 
@@ -92,7 +93,7 @@ __cinderExport = {
 		return []; // Return array of items same as search()
 	},
 
-	// ── Resolve Download ────────────────────────────
+	// â”€â”€ Resolve Download â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 	// Required if capabilities.resolve = true
 	// Use this if your search gives you a detail page URL, but you
 	// need to do another fetch to extract the actual .epub / .cbz download URL.
@@ -112,8 +113,8 @@ __cinderExport = {
 		};
 	},
 
-	// ── Extension Config ────────────────────────────
-	// Optional. If provided, users will see a ⚙️ icon to configure settings.
+	// â”€â”€ Extension Config â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+	// Optional. If provided, users will see a âš™ï¸ icon to configure settings.
 
 	getSettings() {
 		return [
@@ -143,3 +144,4 @@ __cinderExport = {
 		];
 	}
 };
+

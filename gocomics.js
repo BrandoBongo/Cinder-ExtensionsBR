@@ -1,13 +1,15 @@
-// Comics Extension for Cinder (powered by ComicsRSS)
-// Version 3.3.0 – extracts all slugs from comicsrss.com, titles derived from slug
+﻿// Comics Extension for Cinder (powered by ComicsRSS)
+// Version 3.3.0 â€“ extracts all slugs from comicsrss.com, titles derived from slug
 
 __cinderExport = {
   id: "gocomics",
   name: "GoComics",
   version: "3.3.0",
-  icon: "🗞️",
-  description: "Read 600+ daily comic strips via ComicsRSS – GoComics, Comics Kingdom, Wumo, Life on Earth, and more.",
-  contentType: "manga",
+  icon: "ðŸ—žï¸",
+  description: "Read 600+ daily comic strips via ComicsRSS â€“ GoComics, Comics Kingdom, Wumo, Life on Earth, and more.",
+  contentType: "comics",
+  contentTypes: ["comic"],
+  contentSubtypes: ["comicStrip"],
 
   capabilities: {
     search: true,
@@ -107,7 +109,7 @@ __cinderExport = {
   // -------------------------
   // Parse ComicsRSS index
   // Simply extract every unique slug from any .rss URL on the page.
-  // No title parsing — title is derived from slug instead.
+  // No title parsing â€” title is derived from slug instead.
   // This means nothing gets dropped due to regex failures.
   // -------------------------
 
@@ -236,8 +238,8 @@ __cinderExport = {
 
   getDiscoverSections: function() {
     return Promise.resolve([
-      { id: "popular",  title: "Popular Comics", icon: "🔥" },
-      { id: "classics", title: "Classic Comics",  icon: "📰" },
+      { id: "popular",  title: "Popular Comics", icon: "ðŸ”¥" },
+      { id: "classics", title: "Classic Comics",  icon: "ðŸ“°" },
     ]);
   },
 
@@ -351,7 +353,7 @@ __cinderExport = {
       }).catch(function() { return []; });
     }
 
-    // TIER 1: ComicsRSS – slug IS the RSS filename, always exact
+    // TIER 1: ComicsRSS â€“ slug IS the RSS filename, always exact
     return cinder.fetch(self.RSS_BASE + "/" + slug + ".rss", {
       headers: { "User-Agent": "Mozilla/5.0", "Accept": "*/*" },
     }).then(function(r) {
@@ -418,3 +420,4 @@ __cinderExport = {
     ];
   },
 };
+
