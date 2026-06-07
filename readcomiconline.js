@@ -10,7 +10,7 @@
 __cinderExport = {
 	id: "readcomiconline",
 	name: "ReadComicOnline",
-	version: "1.0.10",
+	version: "1.0.9",
 	icon: "📚",
 	description: "Read Marvel, DC, Image and more comics from ReadComicOnline",
 	contentType: "comics",
@@ -150,15 +150,7 @@ __cinderExport = {
 			"Referer": this._baseUrl + "/",
 		};
 
-		const res = await cinder.fetchBrowser(url, {
-			headers: {
-				...headers,
-				"X-Cinder-Suppress-Interactive": "1",
-				"X-Cinder-Wait-For-Selector": "script,img",
-				"X-Cinder-Min-Wait-Ms": "4500",
-				"X-Cinder-Max-Wait-Ms": "18000",
-			},
-		});
+		const res = await cinder.fetch(url, { headers });
 		if (res.status !== 200 || !res.data) return [];
 
 		const pages = [];
