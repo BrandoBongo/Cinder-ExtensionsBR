@@ -3,6 +3,23 @@
   "author": "CinderDev",
   "extensions": [
     {
+      "id": "asurascans",
+      "name": "Asura Scans",
+      "version": "0.1.0-cinder",
+      "description": "Read manga, manhwa, and manhua from Asura Scans.",
+      "contentType": "manga",
+      "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/asurascans.js",
+      "minCinderVersion": "2.0.0",
+      "contentTypes": [
+        "manga"
+      ],
+      "contentSubtypes": [
+        "manga",
+        "manhwa",
+        "manhua"
+      ]
+    },
+    {
       "id": "atsumaru",
       "name": "Atsumaru",
       "version": "0.1.0-cinder",
