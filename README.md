@@ -22,6 +22,7 @@ Extensions are JavaScript plugins that add content sources to Cinder. They run i
 | **WeebCentral** | Manga | Search, read, and download manga from WeebCentral. Credit to Theoenogo for building this extension. |
 | **DownMagaz** | Magazines | Search, read, and download magazines from downmagaz.net. Credit to Tonynks for building much of this extension. |
 | **GoComics** | Comics | Read daily comic strips from GoComics, Comics Kingdom, ComicsRSS, and more. Credit to Tonynks for the source extension. |
+| **ComicHubFree** | Comics | Search and read western comics from ComicHubFree. |
 | **BBato** | Manga | Read manga, manhwa, and manhua from BBato. |
 
 ## How To Install

@@ -93,6 +93,21 @@
       ]
     },
     {
+      "id": "comichubfree",
+      "name": "ComicHubFree",
+      "version": "0.1.1-cinder",
+      "description": "Read western comics from ComicHubFree.",
+      "contentType": "comics",
+      "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/comichubfree.js",
+      "minCinderVersion": "2.0.0",
+      "contentTypes": [
+        "comic"
+      ],
+      "contentSubtypes": [
+        "westernComic"
+      ]
+    },
+    {
       "id": "bbato",
       "name": "BBato",
       "version": "1.0.3-cinder",
