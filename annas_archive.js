@@ -6,7 +6,7 @@
 __cinderExport = {
 	id: "annas-archive-slow",
 	name: "Anna's Archive",
-	version: "2.1.9",
+	version: "2.1.10",
 	icon: "📚",
 	description: "Anna's Archive direct downloader powered entirely by your device, with no backend infrastructure.",
 	contentType: "books",
@@ -404,11 +404,21 @@ __cinderExport = {
 		var detailResp = null;
 
 		try {
-			// Give Libgen a 4s head start race against detail page
-			libgenResult = await Promise.race([
-				libgenPromise,
+			// Let a fast Libgen CDN result win, but don't stall if the detail page is ready first.
+			var firstReady = await Promise.race([
+				libgenPromise.then(function(url) {
+					return url ? { type: "libgen", url: url } : null;
+				}),
+				detailPromise.then(function(resp) {
+					return resp ? { type: "detail", resp: resp } : null;
+				}),
 				new Promise(function(resolve) { setTimeout(function() { resolve(null); }, 4000); }),
 			]);
+			if (firstReady && firstReady.type === "libgen") {
+				libgenResult = firstReady.url;
+			} else if (firstReady && firstReady.type === "detail") {
+				detailResp = firstReady.resp;
+			}
 		} catch (e) {
 			libgenResult = null;
 		}
@@ -424,9 +434,11 @@ __cinderExport = {
 			};
 		}
 
-		// Libgen didn't win the race — wait for detail page (it was already loading in parallel)
-		cinder.log("[AA] Libgen CDN didn't win race, waiting for detail page...");
-		detailResp = await detailPromise;
+		// Libgen didn't win the race — use the detail page as soon as it is available.
+		if (!detailResp) {
+			cinder.log("[AA] Libgen CDN didn't win race, waiting for detail page...");
+			detailResp = await detailPromise;
+		}
 
 		// Meanwhile, Libgen might still finish — keep its promise alive
 		// We'll check it again after parsing the detail page
