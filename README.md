@@ -20,6 +20,7 @@ Extensions are JavaScript plugins that add content sources to Cinder. They run i
 | **Atsumaru** | Manga | Read manga, manhwa, manhua, and OEL from Atsumaru. |
 | **MangaDex** | Manga | Search manga from MangaDex.org, a free community-run manga platform. |
 | **OPDS Catalog** | Books | Connect to your OPDS-compatible server, including Komga, Kavita, Calibre-web, and COPS. |
+| **Anna's Archive** | Books | Direct downloader powered entirely by your device; no backend infrastructure. |
 | **ReadComicsOnline** | Comics | Search, read, and download comics from ReadComicsOnline. |
 | **WeebCentral** | Manga | Search, read, and download manga from WeebCentral. Credit to Theoenogo for building this extension. |
 | **DownMagaz** | Magazines | Search, read, and download magazines from downmagaz.net. Credit to Tonynks for building much of this extension. |
@@ -249,3 +250,4 @@ cinder.log/warn/error(...)            // Extension logging
 ## License
 
 Extensions in this repository are provided as-is for educational purposes.
+

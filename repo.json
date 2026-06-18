@@ -41,7 +41,7 @@
       "id": "mangadex",
       "name": "MangaDex",
       "version": "1.0.7",
-      "description": "Search manga from MangaDex.org â€” free, community-run manga platform",
+      "description": "Search manga from MangaDex.org — free, community-run manga platform",
       "contentType": "manga",
       "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/mangadex.js",
       "minCinderVersion": "2.0.0",
@@ -56,7 +56,7 @@
       "id": "readcomiconline",
       "name": "ReadComicOnline",
       "version": "1.0.11",
-      "description": "Read Marvel, DC, Image and more comics â€” the largest western comics library",
+      "description": "Read Marvel, DC, Image and more comics — the largest western comics library",
       "contentType": "comics",
       "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/readcomiconline.js",
       "minCinderVersion": "2.0.0",
@@ -158,6 +158,20 @@
         "manhwa",
         "manhua"
       ]
+    },
+    {
+      "id": "annas-archive-slow",
+      "name": "Anna's Archive",
+      "version": "2.1.8",
+      "description": "Anna's Archive direct downloader powered entirely by your device, with no backend infrastructure.",
+      "contentType": "books",
+      "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/annas_archive.js",
+      "minCinderVersion": "1.0.0",
+      "contentTypes": [
+        "ebook"
+      ],
+      "excludeFromDefaultMetadataProviders": true
     }
   ]
 }
+
