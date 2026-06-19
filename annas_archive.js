@@ -6,7 +6,7 @@
 __cinderExport = {
 	id: "annas-archive-slow",
 	name: "Anna's Archive",
-	version: "2.1.11",
+	version: "2.1.10",
 	icon: "📚",
 	description: "Anna's Archive direct downloader powered entirely by your device, with no backend infrastructure.",
 	contentType: "books",
@@ -106,37 +106,6 @@ __cinderExport = {
 		return "https://" + this._BASE_DOMAINS[0];
 	},
 
-	_looksLikeChallengeHtml: function(html) {
-		var lower = String(html || "").toLowerCase();
-		if (!lower) return true;
-		var markers = [
-			"cf-challenge",
-			"__cf_chl",
-			"ddos-guard",
-			"checking your browser",
-			"just a moment",
-			"verify you are human",
-			"captcha",
-			"enable cookies",
-			"access denied",
-		];
-		for (var i = 0; i < markers.length; i++) {
-			if (lower.indexOf(markers[i]) !== -1) return true;
-		}
-		return false;
-	},
-
-	_fetchBrowserSearchPage: async function(url) {
-		cinder.log("[AA] Browser retry for search page: " + url);
-		return await cinder.fetchBrowser(url, {
-			headers: {
-				"X-Cinder-Suppress-Interactive": "1",
-				"X-Cinder-Wait-For-Selector": "a[href*='/md5/']",
-				"X-Cinder-Min-Wait-Ms": "1200",
-				"X-Cinder-Max-Wait-Ms": "12000",
-			},
-		});
-	},
 	_smartFetch: async function(url) {
 		try {
 			var resp = await cinder.fetch(url, {
@@ -147,8 +116,8 @@ __cinderExport = {
 				},
 			});
 
-			if (resp.status === 403 || this._looksLikeChallengeHtml(resp.data) || (resp.data && resp.data.length < 500 && resp.data.indexOf("challenge") !== -1)) {
-				cinder.log("[AA] Challenge/interstitial detected, falling back to browser fetch for: " + url);
+			if (resp.status === 403 || (resp.data && resp.data.indexOf("cf-challenge") !== -1) || (resp.data && resp.data.length < 500 && resp.data.indexOf("challenge") !== -1)) {
+				cinder.log("[AA] Cloudflare detected, falling back to browser fetch for: " + url);
 				return await cinder.fetchBrowser(url, { headers: { "X-Cinder-Suppress-Interactive": "1" } });
 			}
 
@@ -180,7 +149,6 @@ __cinderExport = {
 				cinder.log("[AA] Trying: " + url);
 				var resp = await this._smartFetch(url);
 				if (resp.status === 200 && resp.data && resp.data.length > 500) {
-					resp._sourceUrl = url;
 					return resp;
 				}
 				cinder.warn("[AA] " + domains[i] + " returned status " + resp.status);
@@ -300,25 +268,7 @@ __cinderExport = {
 
 		var resp = await this._fetchWithFallback(searchPath);
 		var parsedResults = this._parseSearchResultsFromHtml(resp.data);
-		if (parsedResults.length === 0) {
-			var baseUrl = await this._getBaseUrl();
-			var browserUrl = resp._sourceUrl || (baseUrl + searchPath);
-			if (this._looksLikeChallengeHtml(resp.data) || resp.data.indexOf("/md5/") === -1) {
-				try {
-					var browserResp = await this._fetchBrowserSearchPage(browserUrl);
-					var browserResults = this._parseSearchResultsFromHtml(browserResp.data || "");
-					if (browserResults.length > 0) {
-						cinder.log("[AA] Parsed " + browserResults.length + " results from browser retry (epub/pdf only)");
-						return browserResults;
-					}
-					if (browserResp.data && browserResp.data.indexOf("/md5/") !== -1) {
-						resp = browserResp;
-					}
-				} catch (browserErr) {
-					cinder.warn("[AA] Browser search retry failed: " + browserErr);
-				}
-			}
-		} else {
+		if (parsedResults.length > 0) {
 			cinder.log("[AA] Parsed " + parsedResults.length + " results from result cards (epub/pdf only)");
 			return parsedResults;
 		}
