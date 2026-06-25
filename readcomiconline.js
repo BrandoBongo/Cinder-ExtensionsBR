@@ -138,7 +138,7 @@ __cinderExport = {
 		return chapters.reverse();
 	},
 
-	// ── Pages (Images) ───────────────────────────────
+// ── Pages (Images) ───────────────────────────────
 
 	async getPages(chapterId) {
 		// readType=1 = all pages on one page
@@ -158,8 +158,8 @@ __cinderExport = {
 
 		function addPage(src) {
 			if (!src || seen[src]) return;
-			if (src.includes("/Content/") || src.includes("/Uploads/") ||
-				src.includes("icon") || src.includes("logo") ||
+			// REMOVED aggressive /Content/ and /Uploads/ filters to prevent skipping fallback pages
+			if (src.includes("icon") || src.includes("logo") ||
 				src.includes("avatar") || src.includes("loading") ||
 				src.includes("google") || src.includes("analytics") ||
 				src.includes(".gif") || src.includes("dreemy") ||
@@ -210,17 +210,25 @@ __cinderExport = {
 			return "https://2.bp.blogspot.com/" + decoded + query;
 		}
 
-		// Current RCO pages embed obfuscated image paths in pth assignments.
-		const pthRegex = /pth\s*=\s*'([^']+)'[\s\S]*?\.push\(pth\);/g;
+		// FIXED REGEX: Targets the assignment string safely without over-matching across chunks
+		const pthRegex = /pth\s*=\s*'([^']+)'/g;
 		let match;
 		while ((match = pthRegex.exec(res.data)) !== null) {
-			addPage(decodeRcoPath(match[1]));
+			const decoded = decodeRcoPath(match[1]);
+			if (decoded) {
+				addPage(decoded);
+			}
 		}
 
-		// Fallback for older pages or if the host switches back to populated img src values.
-		const imgRegex = /<img[^>]*src="(https?:\/\/[^\"]+)"[^>]*>/gi;
+		// Fallback for older legacy pages or raw elements
+		const imgRegex = /<img[^>]*src="([^"]+)"[^>]*>/gi;
 		while ((match = imgRegex.exec(res.data)) !== null) {
-			addPage(match[1]);
+			// Ensure it's an absolute URL
+			let imgUrl = match[1];
+			if (imgUrl.startsWith("/")) {
+				imgUrl = this._baseUrl + imgUrl;
+			}
+			addPage(imgUrl);
 		}
 
 		return pages;
